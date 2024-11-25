@@ -462,6 +462,9 @@ float AP_Baro::get_EAS2TAS(void)
     _last_altitude_EAS2TAS = altitude;
     return _EAS2TAS;
 }
+float AP_Baro::get_pressure_alt() {
+    return _pressure_alt; // Adjust based on actual implementation
+}
 
 // return air density / sea level density - decreases as altitude climbs
 float AP_Baro::get_air_density_ratio(void)

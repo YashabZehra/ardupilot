@@ -1,0 +1,3 @@
+empy==4.2
+future==1.0.0
+pyserial==3.5

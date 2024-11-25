@@ -1,4 +1,6 @@
 #include "Copter.h"
+#include <mavlink/v2.0/ardupilotmega/mavlink.h>
+
 
 // return barometric altitude in centimeters
 void Copter::read_barometer(void)
@@ -9,6 +11,20 @@ void Copter::read_barometer(void)
 
     motors->set_air_density_ratio(barometer.get_air_density_ratio());
 }
+void update_barometer() {
+    float raw_alt = baro.get_pressure_alt();
+
+    // Pack and send the custom RAW_BARO message
+    mavlink_message_t msg;
+    mavlink_msg_raw_baro_pack(
+        mavlink_system.sysid,     // System ID
+        mavlink_system.compid,    // Component ID
+        &msg,
+        raw_alt                   // Barometer altitude
+    );
+    comm_send_ch(MAVLINK_COMM_0, &msg); // Send over telemetry channel 0
+}
+
 
 void Copter::init_rangefinder(void)
 {
